@@ -9,7 +9,7 @@ import numpy as np
 from scipy import cluster
 from scipy.cluster.hierarchy import linkage, dendrogram
 from scipy.spatial.distance import pdist
-from scipy.stats import chisquare, pearsonr
+from scipy.stats import chi2_contingency, pearsonr
 from itertools import combinations
 
 # @ TODO
@@ -136,12 +136,22 @@ def myCorrPlot(df):
 
 	return plt
 
+def myChiSquaredTest(df):
+	chi2, p, _, _ = chi2_contingency(df.values)
+	print "chi2 score:", chi2
+	print "pvalue:", p
+	if p < 0.05: return True
+	else: return False
+
+
 if __name__ == '__main__':
 	pass
 	# # An example with IRIS dataset
 	# from sklearn import datasets
 	# iris = datasets.load_iris()
 	# df = pd.DataFrame(iris.data, columns=iris.feature_names)
+	# # Chi-Square test
+	# myChiSquaredTest(df)
 	# # Scatter Matrix of features
 	# myScatter(df)
 	# # Correlations plot
