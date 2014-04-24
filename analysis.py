@@ -11,9 +11,10 @@ from scipy.cluster.hierarchy import linkage, dendrogram
 from scipy.spatial.distance import pdist
 from scipy.stats import chi2_contingency, pearsonr
 from itertools import combinations
+import sys
+sys.path.append("lib")
+import myorngCA
 
-# @ TODO
-# plot PCA en 3d
 
 def circleOfCorrelations(pc_infos, ebouli):
 	plt.Circle((0,0),radius=10, color='g', fill=False)
@@ -143,13 +144,21 @@ def myChiSquaredTest(df):
 	if p < 0.05: return True
 	else: return False
 
+def myAFC(df):
+	# http://orange.biolab.si/doc/modules/orngCA.htm
+	c = myorngCA.CA(df.values, labelR=df.index.tolist() , labelC=df.columns.tolist())
+	c.Biplot()
+
 
 if __name__ == '__main__':
 	pass
+
 	# # An example with IRIS dataset
 	# from sklearn import datasets
 	# iris = datasets.load_iris()
 	# df = pd.DataFrame(iris.data, columns=iris.feature_names)
+	# # Correspondence Analysis
+	# myAFC(df)
 	# # Chi-Square test
 	# myChiSquaredTest(df)
 	# # Scatter Matrix of features
